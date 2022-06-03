@@ -1,0 +1,25 @@
+.main {
+  background-color: red;
+  height: 100vh;
+  width: 100vw;
+
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 1fr 8fr 1fr;
+
+  &__information {
+  }
+
+  &__chats {
+    grid-row: 2 / 4;
+  }
+
+  &__chat-information {
+  }
+
+  &__chat-screen {
+  }
+
+  &__keyboard {
+  }
+}
