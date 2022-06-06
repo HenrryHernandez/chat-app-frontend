@@ -1,14 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface AuthState {
-  isAuthenticated: Boolean;
-  user: {
-    username: String;
-    _id: String;
-    groups: String[];
-  };
-  token: String;
-}
+import { AuthState } from "../../models";
 
 const initialState: AuthState = {
   isAuthenticated: false,

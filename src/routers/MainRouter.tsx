@@ -1,10 +1,9 @@
 import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { AppStore } from "../redux/store";
-
 import { PrivateRouter } from "./PrivateRouter";
 import { PublicRouter } from "./PublicRouter";
+import { AppStore } from "../models";
 import { Login } from "../pages/Login";
 import { Main } from "../pages/Main";
 

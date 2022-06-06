@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { AuthState, logout } from "../redux/states/auth";
+import { logout } from "../redux/states/auth";
 
 import { ChatCard } from "../components/ChatCard";
 import { InformationCard } from "../components/InformationCard";
 import { InputText } from "../components/InputText";
+import { AuthState } from "../models";
 
 export const Main = () => {
   const dispatch = useDispatch();

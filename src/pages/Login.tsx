@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { AuthState, login } from "./../redux/states/auth";
+import { AuthState } from "../models";
+import { login } from "./../redux/states/auth";
 
 const initState: AuthState = {
   isAuthenticated: true,
