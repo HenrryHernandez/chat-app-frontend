@@ -1,11 +1,11 @@
 export interface AuthState {
-  isAuthenticated: Boolean;
+  isAuthenticated: boolean;
   user: {
-    username: String;
-    _id: String;
-    groups: String[];
+    username: string;
+    _id: string;
+    groups: string[];
   };
-  token: String;
+  token: string;
 }
 
 export interface AppStore {

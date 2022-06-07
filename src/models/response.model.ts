@@ -1,12 +1,12 @@
 import { User } from "./user.model";
 
 export interface CustomResponse<T> {
-  success: Boolean;
-  msg: String;
+  success: boolean;
+  msg: string;
   data: T;
 }
 
 export interface LoginInformation {
   user: User;
-  token: String;
+  token: string;
 }

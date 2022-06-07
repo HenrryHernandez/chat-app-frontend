@@ -1,5 +1,5 @@
 export interface User {
-  _id: String;
-  username: String;
-  chats: String[];
+  _id: string;
+  username: string;
+  chats: string[];
 }

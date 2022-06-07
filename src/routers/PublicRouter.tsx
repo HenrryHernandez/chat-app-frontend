@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 interface Props {
-  isAuthenticated: Boolean;
+  isAuthenticated: boolean;
 }
 
 export const PublicRouter = ({ isAuthenticated }: Props) => {
