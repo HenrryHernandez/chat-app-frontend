@@ -1,40 +1,34 @@
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
-import { AuthState } from "../models";
-import { login } from "./../redux/states/auth";
-
-const initState: AuthState = {
-  isAuthenticated: true,
-  user: {
-    username: "henrry",
-    _id: "alsdjlasd",
-    groups: ["chat 1"],
-  },
-  token: "aspdj2pjpo2j3p",
-};
+import useRequestAndLoad from "../hooks/useRequestAndLoad";
+import { CustomResponse, LoginInformation } from "../models/response.model";
+import { loginAction } from "./../redux/states/auth";
+import { loginService } from "./../services/auth.service";
 
 export const Login = () => {
+  const { loading, makeCallRequest } = useRequestAndLoad();
   const dispatch = useDispatch();
-  const navigator = useNavigate();
 
-  const goToMain = () => {
-    navigator("/");
+  const login = async () => {
+    try {
+      const { data }: CustomResponse<LoginInformation> = await makeCallRequest(
+        loginService("user_1", "asdjo")
+      );
+
+      dispatch(loginAction({ isAuthenticated: true, ...data.user }));
+    } catch (error) {
+      //TODO: add error handler
+    }
   };
 
-  const login2 = () => {
-    dispatch(login(initState));
-  };
-
-  const goToAny = () => {
-    navigator("/about");
-  };
+  useEffect(() => {
+    console.log(loading);
+  }, [loading]);
 
   return (
     <div>
-      <button onClick={login2}>Login</button>
-      <button onClick={goToMain}>try to go to main</button>
-      <button onClick={goToAny}>try to go to any</button>
+      <button onClick={login}>Login</button>
     </div>
   );
 };

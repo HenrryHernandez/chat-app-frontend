@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { logout } from "../redux/states/auth";
+import { logoutAction } from "../redux/states/auth";
 
 import { ChatCard } from "../components/ChatCard";
 import { InformationCard } from "../components/InformationCard";
@@ -14,7 +14,7 @@ export const Main = () => {
   const navigator = useNavigate();
 
   const logout2 = () => {
-    dispatch(logout());
+    dispatch(logoutAction());
   };
 
   const goToLogin = () => {
