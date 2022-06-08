@@ -7,6 +7,7 @@ import { CustomResponse, LoginInformation } from "../models/response.model";
 import { loginAction } from "./../redux/states/auth";
 import { setUserAction } from "./../redux/states/user";
 import { loginService } from "./../services/auth.service";
+import { getUser } from "../services/user.service";
 
 export const Login = () => {
   const [username, setUsername] = useState("user_1");
@@ -39,9 +40,7 @@ export const Login = () => {
     const userId = localStorage.getItem("userId");
     if (!userId) return;
 
-    makeCallRequest(
-      interceptorToken.get<CustomResponse<LoginInformation>>(`/users/${userId}`)
-    )
+    makeCallRequest(getUser(userId))
       .then(({ data }) => {
         dispatch(loginAction({ isAuthenticated: true }));
         dispatch(setUserAction({ ...data.user }));
