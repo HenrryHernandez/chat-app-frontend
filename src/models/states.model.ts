@@ -1,13 +1,14 @@
 export interface AuthState {
   isAuthenticated: boolean;
-  user: {
-    username: string;
-    _id: string;
-    groups: string[];
-  };
   token: string;
+}
+
+export interface UserState {
+  username: string;
+  chats: string[];
 }
 
 export interface AppStore {
   auth: AuthState;
+  user: UserState;
 }

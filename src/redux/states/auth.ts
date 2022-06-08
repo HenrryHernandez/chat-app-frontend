@@ -4,11 +4,6 @@ import { AuthState } from "../../models";
 
 const initialState: AuthState = {
   isAuthenticated: false,
-  user: {
-    username: "",
-    _id: "",
-    groups: [],
-  },
   token: "",
 };
 

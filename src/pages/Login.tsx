@@ -5,6 +5,7 @@ import { useInterceptors } from "../hooks/useInterceptors";
 import useRequestAndLoad from "../hooks/useRequestAndLoad";
 import { CustomResponse, LoginInformation } from "../models/response.model";
 import { loginAction } from "./../redux/states/auth";
+import { setUserAction } from "./../redux/states/user";
 import { loginService } from "./../services/auth.service";
 
 export const Login = () => {
@@ -22,7 +23,8 @@ export const Login = () => {
         loginService(username, password)
       );
 
-      dispatch(loginAction({ isAuthenticated: true, ...data.user }));
+      dispatch(loginAction({ isAuthenticated: true, token: data.token }));
+      dispatch(setUserAction({ ...data.user }));
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.user._id);
@@ -39,7 +41,8 @@ export const Login = () => {
       interceptorToken.get<CustomResponse<LoginInformation>>(`/users/${userId}`)
     )
       .then(({ data }) => {
-        dispatch(loginAction({ isAuthenticated: true, ...data }));
+        dispatch(loginAction({ isAuthenticated: true }));
+        dispatch(setUserAction({ ...data.user }));
       })
       .catch((error) => {
         //TODO: add error handler
