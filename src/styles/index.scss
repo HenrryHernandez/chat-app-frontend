@@ -1,5 +1,12 @@
 //base
+@import "./base/base";
 @import "./base/normalize";
 
+//components
+
+//mixins
+@import "./mixins/center";
+
 //pages
+@import "./pages/login";
 @import "./pages/main";

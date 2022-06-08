@@ -24,7 +24,9 @@ export const Login = () => {
       );
 
       dispatch(loginAction({ isAuthenticated: true, token: data.token }));
-      dispatch(setUserAction({ ...data.user }));
+      dispatch(
+        setUserAction({ username: data.user.username, chats: data.user.chats })
+      );
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.user._id);
