@@ -16,7 +16,7 @@ const useRequestAndLoad = () => {
       return result?.data;
     } catch (error: any) {
       setLoading(false);
-      throw error.response.data.msg;
+      throw error?.response?.data?.msg || "error";
     }
   };
 
