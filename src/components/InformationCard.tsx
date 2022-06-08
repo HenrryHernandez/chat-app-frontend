@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 
-import { logoutAction } from "../redux/states/auth";
-import { removeUserAction } from "../redux/states/user";
+import { removeUserAction, logoutAction } from "../redux/states";
 
 export const InformationCard = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,9 @@
-import { AxiosResponse } from "axios";
 import { useState } from "react";
-import { CustomResponse } from "../models/response.model";
+import { AxiosResponse } from "axios";
 
-const useRequestAndLoad = () => {
+import { CustomResponse } from "../models";
+
+export const useRequestAndLoad = () => {
   const [loading, setLoading] = useState(false);
 
   const makeCallRequest = async (
@@ -22,5 +23,3 @@ const useRequestAndLoad = () => {
 
   return { loading, makeCallRequest };
 };
-
-export default useRequestAndLoad;

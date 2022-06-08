@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import { axiosInstance } from "./../api/apiInstance";
 
 export const useInterceptors = () => {
