@@ -1,56 +1,50 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { AccountCircle } from "@mui/icons-material";
 
-import { logoutAction } from "../redux/states/auth";
-
-import { ChatCard } from "../components/ChatCard";
-import { InformationCard } from "../components/InformationCard";
-import { InputText } from "../components/InputText";
-import { AuthState } from "../models";
+import { AppStore } from "../models";
+import { logoutAction, removeUserAction } from "../redux/states";
 
 export const Main = () => {
+  const { username } = useSelector((state: AppStore) => state.user);
   const dispatch = useDispatch();
-  const authState = useSelector((state: AuthState) => state);
-  const navigator = useNavigate();
+  const [showUserOptions, setShowUserOptions] = useState(false);
 
-  const logout2 = () => {
+  const logout = () => {
     dispatch(logoutAction());
+    dispatch(removeUserAction());
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
   };
 
-  const goToLogin = () => {
-    navigator("/auth/login");
-  };
-
-  const goToAny = () => {
-    navigator("/about");
+  const toggleUserOptions = () => {
+    setShowUserOptions((prev) => !prev);
   };
 
   return (
     <div className="main">
       <div style={{ backgroundColor: "blue" }} className="main__information">
-        <InformationCard />
+        <AccountCircle />
+        {username}
+        <button onClick={toggleUserOptions}>Display options</button>
+        {showUserOptions ? (
+          <>
+            <button>Search</button>
+            <button onClick={logout}>Logout</button>
+          </>
+        ) : null}
       </div>
-      <div style={{ backgroundColor: "green" }} className="main__chats">
-        <ChatCard />
-        <ChatCard />
-        <ChatCard />
-        <ChatCard />
-      </div>
+      <div style={{ backgroundColor: "green" }} className="main__chats"></div>
       <div
         style={{ backgroundColor: "yellow" }}
         className="main__chat-information"
-      >
-        <InformationCard />
-      </div>
-      <div style={{ backgroundColor: "orange" }} className="main__chat-screen">
-        <pre>{JSON.stringify(authState)}</pre>
-        <button onClick={logout2}>Logout</button>
-        <button onClick={goToLogin}>try to go to login</button>
-        <button onClick={goToAny}>try to go to any</button>
-      </div>
-      <div style={{ backgroundColor: "pink" }} className="main__keyboard">
-        <InputText />
-      </div>
+      ></div>
+      <div
+        style={{ backgroundColor: "orange" }}
+        className="main__chat-screen"
+      ></div>
+      <div style={{ backgroundColor: "pink" }} className="main__keyboard"></div>
     </div>
   );
 };
