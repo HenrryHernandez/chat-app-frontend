@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountCircle } from "@mui/icons-material";
 
-import { InputText } from "../components/InputText";
+import { InputText, SearchedChatCard } from "../components";
 import { useDebouncer, useRequestAndLoad } from "../hooks";
 import { AppStore, Chat } from "../models";
 import { logoutAction, removeUserAction } from "../redux/states";
 import { getChats } from "../services";
-import { SearchedChatCard } from "../components/SearchedChatCard";
 
 export const Main = () => {
   const { username } = useSelector((state: AppStore) => state.user);
