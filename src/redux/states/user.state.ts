@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { UserState } from "../../models";
+import { User } from "../../models";
 
-const initialState: UserState = {
+const initialState: User = {
   chats: [],
   username: "",
-  id: "",
+  _id: "",
 };
 
 const userSlice = createSlice({

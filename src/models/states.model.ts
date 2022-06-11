@@ -1,15 +1,7 @@
-export interface AuthState {
-  isAuthenticated: boolean;
-  token: string;
-}
-
-export interface UserState {
-  username: string;
-  chats: string[];
-  id: string;
-}
+import { Auth } from "./auth.model";
+import { User } from "./user.model";
 
 export interface AppStore {
-  auth: AuthState;
-  user: UserState;
+  auth: Auth;
+  user: User;
 }
