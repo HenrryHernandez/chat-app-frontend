@@ -5,6 +5,7 @@ import { UserState } from "../../models";
 const initialState: UserState = {
   chats: [],
   username: "",
+  id: "",
 };
 
 const userSlice = createSlice({

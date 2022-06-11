@@ -6,6 +6,7 @@ export interface AuthState {
 export interface UserState {
   username: string;
   chats: string[];
+  id: string;
 }
 
 export interface AppStore {

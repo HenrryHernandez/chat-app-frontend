@@ -23,7 +23,11 @@ export const Login = () => {
 
       dispatch(loginAction({ isAuthenticated: true, token: data.token }));
       dispatch(
-        setUserAction({ username: data.user.username, chats: data.user.chats })
+        setUserAction({
+          username: data.user.username,
+          chats: data.user.chats,
+          id: data.user._id,
+        })
       );
 
       localStorage.setItem("token", data.token);
