@@ -14,9 +14,12 @@ const userSlice = createSlice({
   reducers: {
     setUserAction: (state, action) => action.payload,
     removeUserAction: (state) => initialState,
+    addChat: (state, action) => {
+      state.chats.push(action.payload);
+    },
   },
 });
 
-export const { setUserAction, removeUserAction } = userSlice.actions;
+export const { setUserAction, removeUserAction, addChat } = userSlice.actions;
 
 export default userSlice.reducer;

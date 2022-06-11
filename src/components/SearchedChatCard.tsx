@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { AppStore } from "../models";
+import { useRequestAndLoad } from "../hooks";
+import { AppStore, Chat } from "../models";
+import { addChat } from "../redux/states";
+import { joinUserToChat } from "../services";
 
 interface Props {
-  id: string;
-  name: string;
+  chat: Chat;
 }
 
-export const SearchedChatCard = ({ id, name }: Props) => {
-  const { chats } = useSelector((state: AppStore) => state.user);
+export const SearchedChatCard = ({ chat }: Props) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state: AppStore) => state.user);
+  const { makeCallRequest } = useRequestAndLoad();
   const [showOptions, setShowOptions] = useState(false);
   const [alreadyJoined, setAlreadyJoined] = useState(false);
 
@@ -17,17 +21,29 @@ export const SearchedChatCard = ({ id, name }: Props) => {
     setShowOptions((prev) => !prev);
   };
 
-  const joinChat = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const joinChat = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.stopPropagation();
+
+    try {
+      const { success } = await makeCallRequest(
+        joinUserToChat(user._id, chat._id)
+      );
+
+      if (success) dispatch(addChat(chat));
+    } catch (error) {
+      // TODO: handle error
+    }
   };
 
   useEffect(() => {
-    setAlreadyJoined(chats.includes(id));
-  }, [id, chats]);
+    setAlreadyJoined(user.chats.map((chat) => chat._id).includes(chat._id));
+  }, [chat._id, user]);
 
   return (
     <div onClick={toggleOptions}>
-      {name}
+      {chat.name}
 
       {showOptions && (
         <div>

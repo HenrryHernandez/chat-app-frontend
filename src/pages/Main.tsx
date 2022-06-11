@@ -9,7 +9,9 @@ import { logoutAction, removeUserAction } from "../redux/states";
 import { getChats } from "../services";
 
 export const Main = () => {
-  const { username } = useSelector((state: AppStore) => state.user);
+  const { username, chats: userChats } = useSelector(
+    (state: AppStore) => state.user
+  );
   const dispatch = useDispatch();
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -65,22 +67,25 @@ export const Main = () => {
       </div>
 
       <div style={{ backgroundColor: "green" }} className="main__chats">
-        {showSearch &&
-          (loading ? (
+        {showSearch ? (
+          loading ? (
             <div>loading...</div>
           ) : (
             <div>
               <button onClick={closeSearch}>X</button>
               <InputText setText={setText} text={text} />
               {chats?.map((chat) => (
-                <SearchedChatCard
-                  key={chat._id}
-                  id={chat._id}
-                  name={chat.name}
-                />
+                <SearchedChatCard key={chat._id} chat={chat} />
               ))}
             </div>
-          ))}
+          )
+        ) : (
+          <div>
+            {userChats.map((chat) => (
+              <p key={chat._id}>{chat.name}</p>
+            ))}
+          </div>
+        )}
       </div>
 
       <div
