@@ -54,6 +54,8 @@ export const Main = () => {
   };
 
   const sendMessage = () => {
+    if (!message.trim().length) return;
+
     socket.emit("set-new-message", selectedChat._id, message);
   };
 
