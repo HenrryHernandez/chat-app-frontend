@@ -1,24 +1,28 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountCircle } from "@mui/icons-material";
 
-import { InputText, SearchedChatCard } from "../components";
+import { ChatCard, InputText, SearchedChatCard } from "../components";
+import { SocketContext } from "../contexts";
 import { useDebouncer, useRequestAndLoad } from "../hooks";
 import { AppStore, Chat } from "../models";
 import { logoutAction, removeUserAction } from "../redux/states";
 import { getChats } from "../services";
 
 export const Main = () => {
+  const { socket } = useContext(SocketContext);
   const { username, chats: userChats } = useSelector(
     (state: AppStore) => state.user
   );
   const dispatch = useDispatch();
+  const { makeCallRequest, loading } = useRequestAndLoad();
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [text, setText] = useState("");
-  const { debouncedText } = useDebouncer(text);
-  const { makeCallRequest, loading } = useRequestAndLoad();
   const [chats, setChats] = useState<Chat[]>();
+  const [selectedChat, setSelectedChat] = useState(userChats[0] || "");
+  const [searchText, setSearchText] = useState("");
+  const { debouncedText } = useDebouncer(searchText);
+  const [message, setMessage] = useState("");
 
   const logout = () => {
     dispatch(logoutAction());
@@ -34,11 +38,23 @@ export const Main = () => {
 
   const closeSearch = () => {
     setShowSearch(false);
-    setText("");
+    setSearchText("");
   };
 
   const openSearch = () => {
     setShowSearch(true);
+  };
+
+  const selectChat = (id: string) => {
+    const chat = userChats.find((chat) => chat._id === id);
+
+    if (!chat) return;
+
+    setSelectedChat(chat);
+  };
+
+  const sendMessage = () => {
+    socket.emit("set-new-message", selectedChat._id, message);
   };
 
   useEffect(() => {
@@ -73,7 +89,7 @@ export const Main = () => {
           ) : (
             <div>
               <button onClick={closeSearch}>X</button>
-              <InputText setText={setText} text={text} />
+              <InputText setText={setSearchText} text={searchText} />
               {chats?.map((chat) => (
                 <SearchedChatCard key={chat._id} chat={chat} />
               ))}
@@ -82,7 +98,12 @@ export const Main = () => {
         ) : (
           <div>
             {userChats.map((chat) => (
-              <p key={chat._id}>{chat.name}</p>
+              <ChatCard
+                key={chat._id}
+                chat={chat}
+                selectChat={selectChat}
+                isSelected={selectedChat._id === chat._id}
+              />
             ))}
           </div>
         )}
@@ -98,7 +119,10 @@ export const Main = () => {
         className="main__chat-screen"
       ></div>
 
-      <div style={{ backgroundColor: "pink" }} className="main__keyboard"></div>
+      <div style={{ backgroundColor: "pink" }} className="main__keyboard">
+        <InputText setText={setMessage} text={message} />
+        <button onClick={sendMessage}>Send</button>
+      </div>
     </div>
   );
 };
