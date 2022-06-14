@@ -5,7 +5,7 @@ import { AccountCircle } from "@mui/icons-material";
 import { ChatCard, InputText, SearchedChatCard } from "../components";
 import { SocketContext } from "../contexts";
 import { useDebouncer, useRequestAndLoad } from "../hooks";
-import { AppStore, Chat } from "../models";
+import { AppStore, Chat, Message } from "../models";
 import { logoutAction, removeUserAction } from "../redux/states";
 import { getChats } from "../services";
 
@@ -23,6 +23,7 @@ export const Main = () => {
   const [searchText, setSearchText] = useState("");
   const { debouncedText } = useDebouncer(searchText);
   const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const logout = () => {
     dispatch(logoutAction());
@@ -57,6 +58,14 @@ export const Main = () => {
     if (!message.trim().length) return;
 
     socket.emit("set-new-message", selectedChat._id, message);
+  };
+
+  const addMessage = (message: Message) => {
+    setMessages((prev) => [...prev, message]);
+  };
+
+  const selectMessages = (messages: Message[]) => {
+    setMessages(messages);
   };
 
   useEffect(() => {
@@ -105,6 +114,8 @@ export const Main = () => {
                 chat={chat}
                 selectChat={selectChat}
                 isSelected={selectedChat._id === chat._id}
+                addMessage={addMessage}
+                selectMessages={selectMessages}
               />
             ))}
           </div>
@@ -116,10 +127,11 @@ export const Main = () => {
         className="main__chat-information"
       ></div>
 
-      <div
-        style={{ backgroundColor: "orange" }}
-        className="main__chat-screen"
-      ></div>
+      <div style={{ backgroundColor: "orange" }} className="main__chat-screen">
+        {messages?.map(({ id, message }) => (
+          <p key={id}>{message}</p>
+        ))}
+      </div>
 
       <div style={{ backgroundColor: "pink" }} className="main__keyboard">
         <InputText setText={setMessage} text={message} />
