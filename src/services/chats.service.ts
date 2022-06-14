@@ -6,7 +6,7 @@ export const getChats = (name: string) => {
 };
 
 export const joinUserToChat = (userId: string, chatId: string) => {
-  return axiosInstance.patch<CustomResponse<Chat[]>>(`/chats`, {
+  return axiosInstance.patch<CustomResponse<Chat[]>>(`/chats/join`, {
     userId,
     chatId,
   });
