@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
 import { SocketContext } from "../contexts";
-import { Chat } from "../models";
+import { Chat, Message } from "../models";
 
 interface Props {
   chat: Chat;
@@ -14,15 +14,13 @@ export const ChatCard = ({ chat, isSelected, selectChat }: Props) => {
   const [accumulatedMessages, setAccumulatedMessages] = useState(0);
 
   useEffect(() => {
-    socket.emit("get-current-messages", chat._id, (messages: string[]) => {
-      console.log(messages);
-    });
+    socket.emit("get-current-messages", chat._id, (messages: Message[]) => {});
   }, [socket, chat._id]);
 
   useEffect(() => {
-    socket.on(chat._id, (message: string) => {
+    socket.on(chat._id, (message: Message) => {
+      console.log("new message to ", chat._id);
       setAccumulatedMessages((prev) => prev + 1);
-      console.log("new message = ", message);
     });
   }, [socket, chat._id]);
 
