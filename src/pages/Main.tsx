@@ -20,7 +20,7 @@ export const Main = () => {
   const { makeCallRequest, loading } = useRequestAndLoad();
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [showChatOptions, setShowChatOptions] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
   const [chats, setChats] = useState<Chat[]>();
   const [selectedChat, setSelectedChat] = useState<Chat | null>(userChats[0]);
   const [searchText, setSearchText] = useState("");
@@ -44,13 +44,9 @@ export const Main = () => {
     setShowChatOptions((prev) => !prev);
   };
 
-  const closeSearch = () => {
-    setShowSearch(false);
+  const toggleSearchBar = () => {
+    setShowSearchBar((prev) => !prev);
     setSearchText("");
-  };
-
-  const openSearch = () => {
-    setShowSearch(true);
   };
 
   const selectChat = (id: string) => {
@@ -106,19 +102,19 @@ export const Main = () => {
         <button onClick={toggleUserOptions}>Display options</button>
         {showUserOptions ? (
           <>
-            <button onClick={openSearch}>Search</button>
+            <button onClick={toggleSearchBar}>Search</button>
             <button onClick={logout}>Logout</button>
           </>
         ) : null}
       </div>
 
       <div style={{ backgroundColor: "green" }} className="main__chats">
-        {showSearch ? (
+        {showSearchBar ? (
           loading ? (
             <div>loading...</div>
           ) : (
             <div>
-              <button onClick={closeSearch}>X</button>
+              <button onClick={toggleSearchBar}>X</button>
               <InputText setText={setSearchText} text={searchText} />
               {chats?.map((chat) => (
                 <SearchedChatCard key={chat._id} chat={chat} />
