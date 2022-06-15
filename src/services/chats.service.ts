@@ -11,3 +11,10 @@ export const joinUserToChat = (userId: string, chatId: string) => {
     chatId,
   });
 };
+
+export const exitChat = (userId: string, chatId: string) => {
+  return axiosInstance.patch<CustomResponse<any>>(`/chats/exit`, {
+    userId,
+    chatId,
+  });
+};

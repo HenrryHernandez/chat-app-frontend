@@ -1,25 +1,28 @@
 import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AccountCircle } from "@mui/icons-material";
+import { AccountCircle, Group } from "@mui/icons-material";
 
 import { ChatCard, InputText, SearchedChatCard } from "../components";
 import { SocketContext } from "../contexts";
 import { useDebouncer, useRequestAndLoad } from "../hooks";
 import { AppStore, Chat, Message } from "../models";
-import { logoutAction, removeUserAction } from "../redux/states";
-import { getChats } from "../services";
+import { logoutAction, removeChat, removeUserAction } from "../redux/states";
+import { exitChat, getChats } from "../services";
 
 export const Main = () => {
   const { socket } = useContext(SocketContext);
-  const { username, chats: userChats } = useSelector(
-    (state: AppStore) => state.user
-  );
+  const {
+    username,
+    chats: userChats,
+    _id: userId,
+  } = useSelector((state: AppStore) => state.user);
   const dispatch = useDispatch();
   const { makeCallRequest, loading } = useRequestAndLoad();
   const [showUserOptions, setShowUserOptions] = useState(false);
+  const [showChatOptions, setShowChatOptions] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [chats, setChats] = useState<Chat[]>();
-  const [selectedChat, setSelectedChat] = useState(userChats[0] || "");
+  const [selectedChat, setSelectedChat] = useState<Chat | null>(userChats[0]);
   const [searchText, setSearchText] = useState("");
   const { debouncedText } = useDebouncer(searchText);
   const [message, setMessage] = useState("");
@@ -35,6 +38,10 @@ export const Main = () => {
 
   const toggleUserOptions = () => {
     setShowUserOptions((prev) => !prev);
+  };
+
+  const toggleChatOptions = () => {
+    setShowChatOptions((prev) => !prev);
   };
 
   const closeSearch = () => {
@@ -57,7 +64,7 @@ export const Main = () => {
   const sendMessage = () => {
     if (!message.trim().length) return;
 
-    socket.emit("set-new-message", selectedChat._id, message);
+    socket.emit("set-new-message", selectedChat?._id, message);
   };
 
   const addMessage = (message: Message) => {
@@ -66,6 +73,18 @@ export const Main = () => {
 
   const selectMessages = (messages: Message[]) => {
     setMessages(messages);
+  };
+
+  const leaveGroup = async () => {
+    if (!selectedChat) return;
+
+    try {
+      await makeCallRequest(exitChat(userId, selectedChat._id));
+      dispatch(removeChat(selectedChat._id));
+      setSelectedChat(null);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -113,7 +132,7 @@ export const Main = () => {
                 key={chat._id}
                 chat={chat}
                 selectChat={selectChat}
-                isSelected={selectedChat._id === chat._id}
+                isSelected={selectedChat?._id === chat._id}
                 addMessage={addMessage}
                 selectMessages={selectMessages}
               />
@@ -125,7 +144,20 @@ export const Main = () => {
       <div
         style={{ backgroundColor: "yellow" }}
         className="main__chat-information"
-      ></div>
+      >
+        <Group />
+        {selectedChat?.name}
+        <button onClick={toggleChatOptions} disabled={!selectedChat}>
+          Display options
+        </button>
+        {showChatOptions ? (
+          <div>
+            <button onClick={leaveGroup} disabled={loading}>
+              Leave group
+            </button>
+          </div>
+        ) : null}
+      </div>
 
       <div style={{ backgroundColor: "orange" }} className="main__chat-screen">
         {messages?.map(({ id, message }) => (
