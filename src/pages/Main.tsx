@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Menu, MenuItem, styled } from "@mui/material";
-import { AccountCircle, Group, MoreVert } from "@mui/icons-material";
+import { AccountCircle, Group, MoreVert, Send } from "@mui/icons-material";
 
 import { ChatCard, InputText, SearchedChatCard } from "../components";
 import { useChat } from "../hooks";
@@ -14,6 +14,16 @@ const StyledButton = styled(Button)({
   borderRadius: "0px",
   color: `rgb(${125},${125},${125})`,
   backgroundColor: `rgb(${240},${240},${240})`,
+  "&:hover": {
+    backgroundColor: `rgb(${230},${230},${230})`,
+  },
+});
+
+const StyledSendButton = styled(Button)({
+  height: "50%",
+  minWidth: "0px",
+  borderRadius: "4px",
+  color: `rgb(${125},${125},${125})`,
   "&:hover": {
     backgroundColor: `rgb(${230},${230},${230})`,
   },
@@ -178,11 +188,11 @@ export const Main = () => {
         ))}
       </div>
 
-      <div style={{ backgroundColor: "pink" }} className="main__keyboard">
+      <div className="main__keyboard">
         <InputText setText={setMessage} text={message} />
-        <button className="btn btn-primary" onClick={sendMessage}>
-          Send
-        </button>
+        <StyledSendButton onClick={sendMessage}>
+          <Send />
+        </StyledSendButton>
       </div>
     </div>
   );

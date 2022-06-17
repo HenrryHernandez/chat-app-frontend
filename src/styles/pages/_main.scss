@@ -29,6 +29,11 @@
   }
 
   &__keyboard {
+    @include rowCenter;
+    background-color: rgb(224, 224, 224);
+    padding-left: 10px;
+    padding-right: 20px;
+    gap: 4px;
   }
 }
 

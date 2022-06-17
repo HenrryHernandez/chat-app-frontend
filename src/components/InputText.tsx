@@ -5,12 +5,11 @@ interface Props {
 
 export const InputText = ({ text, setText }: Props) => {
   return (
-    <div>
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-    </div>
+    <textarea
+      value={text}
+      onChange={(e) => setText(e.target.value)}
+      className="input-text"
+      rows={1}
+    />
   );
 };

@@ -2,10 +2,11 @@
 @import "./base/base";
 @import "./base/normalize";
 
-//components
-
 //mixins
 @import "./mixins/center";
+
+//components
+@import "./components/input-text";
 
 //pages
 @import "./pages/login";
