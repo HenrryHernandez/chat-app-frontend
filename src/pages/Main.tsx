@@ -1,11 +1,23 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AccountCircle, Group } from "@mui/icons-material";
+import { Button, Menu, MenuItem, styled } from "@mui/material";
+import { AccountCircle, Group, MoreVert } from "@mui/icons-material";
 
 import { ChatCard, InputText, SearchedChatCard } from "../components";
 import { useChat } from "../hooks";
 import { AppStore } from "../models";
 import { logoutAction, removeUserAction } from "../redux/states";
+
+const StyledButton = styled(Button)({
+  height: "100%",
+  minWidth: "0px",
+  borderRadius: "0px",
+  color: `rgb(${125},${125},${125})`,
+  backgroundColor: `rgb(${240},${240},${240})`,
+  "&:hover": {
+    backgroundColor: `rgb(${230},${230},${230})`,
+  },
+});
 
 export const Main = () => {
   const dispatch = useDispatch();
@@ -27,8 +39,6 @@ export const Main = () => {
     selectMessages,
     sendMessage,
   } = useChat();
-  const [showUserOptions, setShowUserOptions] = useState(false);
-  const [showChatOptions, setShowChatOptions] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
 
   const logout = () => {
@@ -39,31 +49,63 @@ export const Main = () => {
     localStorage.removeItem("userId");
   };
 
-  const toggleUserOptions = () => {
-    setShowUserOptions((prev) => !prev);
-  };
-
-  const toggleChatOptions = () => {
-    setShowChatOptions((prev) => !prev);
-  };
-
   const toggleSearchBar = () => {
     setShowSearchBar((prev) => !prev);
     setSearchText("");
   };
 
+  const [userDropdown, setUserDropdown] = useState<null | HTMLElement>(null);
+  const isUserDropdownOpen = Boolean(userDropdown);
+  const openUserDropdown = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setUserDropdown(event.currentTarget);
+  };
+  const closeUserDropdown = () => {
+    setUserDropdown(null);
+  };
+
+  const [chatDropdown, setChatDropdown] = useState<null | HTMLElement>(null);
+  const isChatDropdownOpen = Boolean(chatDropdown);
+  const openChatDropdown = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setChatDropdown(event.currentTarget);
+  };
+  const closeChatDropdown = () => {
+    setChatDropdown(null);
+  };
+
   return (
     <div className="main">
-      <div style={{ backgroundColor: "blue" }} className="main__information">
-        <AccountCircle />
-        {username}
-        <button onClick={toggleUserOptions}>Display options</button>
-        {showUserOptions ? (
-          <div>
-            <button onClick={toggleSearchBar}>Search</button>
-            <button onClick={logout}>Logout</button>
-          </div>
-        ) : null}
+      <div className="main__user-information">
+        <div className="information__name">
+          <AccountCircle />
+          {username}
+        </div>
+        <div className="information__btn-container">
+          <StyledButton
+            id="user-dropdown-button"
+            className="test"
+            aria-controls={
+              isUserDropdownOpen ? "user-dropdown-menu" : undefined
+            }
+            aria-haspopup="true"
+            aria-expanded={isUserDropdownOpen ? "true" : undefined}
+            onClick={openUserDropdown}
+            fullWidth={true}
+          >
+            <MoreVert />
+          </StyledButton>
+        </div>
+        <Menu
+          id="user-dropdown-menu"
+          anchorEl={userDropdown}
+          open={isUserDropdownOpen}
+          onClose={closeUserDropdown}
+          MenuListProps={{
+            "aria-labelledby": "user-dropdown-button",
+          }}
+        >
+          <MenuItem onClick={toggleSearchBar}>Search</MenuItem>
+          <MenuItem onClick={logout}>Logout</MenuItem>
+        </Menu>
       </div>
 
       <div style={{ backgroundColor: "green" }} className="main__chats">
@@ -95,22 +137,39 @@ export const Main = () => {
         )}
       </div>
 
-      <div
-        style={{ backgroundColor: "yellow" }}
-        className="main__chat-information"
-      >
-        <Group />
-        {selectedChat?.name}
-        <button onClick={toggleChatOptions} disabled={!selectedChat}>
-          Display options
-        </button>
-        {showChatOptions ? (
-          <div>
-            <button onClick={leaveGroup} disabled={loading}>
-              Leave group
-            </button>
-          </div>
-        ) : null}
+      <div className="main__chat-information">
+        <div className="information__name">
+          <Group />
+          {selectedChat?.name}
+        </div>
+        <div className="information__btn-container">
+          <StyledButton
+            id="chat-dropdown-button"
+            aria-controls={
+              isChatDropdownOpen ? "chat-dropdown-menu" : undefined
+            }
+            aria-haspopup="true"
+            aria-expanded={isChatDropdownOpen ? "true" : undefined}
+            onClick={openChatDropdown}
+            disabled={!selectedChat}
+            style={{
+              width: "60px",
+            }}
+          >
+            <MoreVert />
+          </StyledButton>
+        </div>
+        <Menu
+          id="chat-dropdown-menu"
+          anchorEl={chatDropdown}
+          open={isChatDropdownOpen}
+          onClose={closeChatDropdown}
+          MenuListProps={{
+            "aria-labelledby": "chat-dropdown-button",
+          }}
+        >
+          <MenuItem onClick={leaveGroup}>Leave group</MenuItem>
+        </Menu>
       </div>
 
       <div style={{ backgroundColor: "orange" }} className="main__chat-screen">
@@ -121,7 +180,9 @@ export const Main = () => {
 
       <div style={{ backgroundColor: "pink" }} className="main__keyboard">
         <InputText setText={setMessage} text={message} />
-        <button onClick={sendMessage}>Send</button>
+        <button className="btn btn-primary" onClick={sendMessage}>
+          Send
+        </button>
       </div>
     </div>
   );

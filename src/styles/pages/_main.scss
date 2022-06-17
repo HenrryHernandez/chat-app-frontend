@@ -1,5 +1,4 @@
 .main {
-  background-color: red;
   height: 100vh;
   width: 100vw;
 
@@ -7,7 +6,14 @@
   grid-template-columns: 1fr 4fr;
   grid-template-rows: 1fr 8fr 1fr;
 
-  &__information {
+  &__user-information {
+    @include rowCenter;
+    justify-content: space-around;
+    position: relative;
+  }
+
+  &__user-options {
+    position: absolute;
   }
 
   &__chats {
@@ -15,6 +21,8 @@
   }
 
   &__chat-information {
+    @include rowCenter;
+    justify-content: space-around;
   }
 
   &__chat-screen {
@@ -22,4 +30,20 @@
 
   &__keyboard {
   }
+}
+
+.information__name {
+  @include rowCenter;
+  justify-content: start;
+  height: 100%;
+  width: 80%;
+  padding-left: 16px;
+  gap: 8px;
+}
+
+.information__btn-container {
+  @include rowCenter;
+  justify-content: end;
+  height: 100%;
+  width: 20%;
 }
