@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Menu, MenuItem, styled } from "@mui/material";
+import { Button, List, ListItem, Menu, MenuItem, styled } from "@mui/material";
 import { AccountCircle, Group, MoreVert, Send } from "@mui/icons-material";
 
 import { ChatCard, InputText, SearchedChatCard } from "../components";
@@ -118,7 +118,7 @@ export const Main = () => {
         </Menu>
       </div>
 
-      <div style={{ backgroundColor: "green" }} className="main__chats">
+      <div className="main__chats">
         {showSearchBar ? (
           loading ? (
             <div>loading...</div>
@@ -133,16 +133,23 @@ export const Main = () => {
           )
         ) : (
           <div>
-            {userChats.map((chat) => (
-              <ChatCard
-                key={chat._id}
-                chat={chat}
-                selectChat={selectChat}
-                isSelected={selectedChat?._id === chat._id}
-                addMessage={addMessage}
-                selectMessages={selectMessages}
-              />
-            ))}
+            <List disablePadding>
+              {userChats.map((chat) => {
+                return (
+                  <div key={chat._id}>
+                    <ListItem disablePadding divider>
+                      <ChatCard
+                        chat={chat}
+                        selectChat={selectChat}
+                        isSelected={selectedChat?._id === chat._id}
+                        addMessage={addMessage}
+                        selectMessages={selectMessages}
+                      />
+                    </ListItem>
+                  </div>
+                );
+              })}
+            </List>
           </div>
         )}
       </div>

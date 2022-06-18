@@ -1,0 +1,22 @@
+.chat-card {
+  @include rowCenter;
+  justify-content: space-around;
+  height: 60px;
+  width: 100%;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(224, 224, 224);
+  }
+
+  &__accumulated-messages {
+    height: 100%;
+    width: 20%;
+    @include rowCenter;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}

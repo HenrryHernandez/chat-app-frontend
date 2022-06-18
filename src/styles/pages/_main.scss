@@ -18,6 +18,7 @@
 
   &__chats {
     grid-row: 2 / 4;
+    overflow-y: scroll;
   }
 
   &__chat-information {
@@ -35,20 +36,4 @@
     padding-right: 20px;
     gap: 4px;
   }
-}
-
-.information__name {
-  @include rowCenter;
-  justify-content: start;
-  height: 100%;
-  width: 80%;
-  padding-left: 16px;
-  gap: 8px;
-}
-
-.information__btn-container {
-  @include rowCenter;
-  justify-content: end;
-  height: 100%;
-  width: 20%;
 }

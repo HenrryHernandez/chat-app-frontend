@@ -1,0 +1,15 @@
+.information__name {
+  @include rowCenter;
+  justify-content: start;
+  height: 100%;
+  width: 80%;
+  padding-left: 16px;
+  gap: 8px;
+}
+
+.information__btn-container {
+  @include rowCenter;
+  justify-content: end;
+  height: 100%;
+  width: 20%;
+}

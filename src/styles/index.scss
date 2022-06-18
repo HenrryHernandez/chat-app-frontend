@@ -5,7 +5,11 @@
 //mixins
 @import "./mixins/center";
 
+//general
+@import "./general/general.scss";
+
 //components
+@import "./components/chat-card";
 @import "./components/input-text";
 
 //pages

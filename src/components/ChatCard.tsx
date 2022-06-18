@@ -1,4 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import { Badge } from "@mui/material";
+import { Group } from "@mui/icons-material";
 
 import { SocketContext } from "../contexts";
 import { Chat, Message } from "../models";
@@ -50,11 +52,20 @@ export const ChatCard = ({
   }, [isSelected]);
 
   return (
-    <div onClick={() => selectChat(chat._id)}>
-      <p style={{ color: isSelected ? "greenyellow" : "black" }}>{chat.name}</p>
-      <span style={{ color: "red" }}>
-        {!isSelected && accumulatedMessages > 0 ? accumulatedMessages : ""}
-      </span>
+    <div
+      className="chat-card"
+      style={{ backgroundColor: isSelected ? "rgb(224, 224, 224)" : "" }}
+      onClick={() => selectChat(chat._id)}
+    >
+      <div className="information__name">
+        <Group />
+        <p>{chat.name}</p>
+      </div>
+      <div className="chat-card__accumulated-messages">
+        {!isSelected && accumulatedMessages > 0 ? (
+          <Badge color="error" badgeContent={accumulatedMessages} showZero />
+        ) : null}
+      </div>
     </div>
   );
 };
