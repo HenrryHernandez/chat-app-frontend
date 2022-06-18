@@ -13,9 +13,9 @@ const StyledButton = styled(Button)({
   minWidth: "0px",
   borderRadius: "0px",
   color: `rgb(${125},${125},${125})`,
-  backgroundColor: `rgb(${240},${240},${240})`,
+  backgroundColor: `rgb(${215},${215},${215})`,
   "&:hover": {
-    backgroundColor: `rgb(${230},${230},${230})`,
+    backgroundColor: `rgb(${200},${200},${200})`,
   },
 });
 
@@ -24,8 +24,9 @@ const StyledSendButton = styled(Button)({
   minWidth: "0px",
   borderRadius: "4px",
   color: `rgb(${125},${125},${125})`,
+  backgroundColor: `rgb(${215},${215},${215})`,
   "&:hover": {
-    backgroundColor: `rgb(${230},${230},${230})`,
+    backgroundColor: `rgb(${200},${200},${200})`,
   },
 });
 

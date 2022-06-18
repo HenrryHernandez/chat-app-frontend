@@ -10,6 +10,7 @@
     @include rowCenter;
     justify-content: space-around;
     position: relative;
+    background-color: rgb(224, 224, 224);
   }
 
   &__user-options {
@@ -24,6 +25,7 @@
   &__chat-information {
     @include rowCenter;
     justify-content: space-around;
+    background-color: rgb(224, 224, 224);
   }
 
   &__chat-screen {
