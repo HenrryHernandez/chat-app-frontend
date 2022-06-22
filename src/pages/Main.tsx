@@ -126,7 +126,11 @@ export const Main = () => {
           ) : (
             <div>
               <button onClick={toggleSearchBar}>X</button>
-              <InputText setText={setSearchText} text={searchText} />
+              <InputText
+                setText={setSearchText}
+                text={searchText}
+                placeholder={"Search"}
+              />
               {chats?.map((chat) => (
                 <SearchedChatCard key={chat._id} chat={chat} />
               ))}
@@ -197,7 +201,11 @@ export const Main = () => {
       </div>
 
       <div className="main__keyboard">
-        <InputText setText={setMessage} text={message} />
+        <InputText
+          setText={setMessage}
+          text={message}
+          placeholder={"Message"}
+        />
         <StyledSendButton onClick={sendMessage}>
           <Send />
         </StyledSendButton>
