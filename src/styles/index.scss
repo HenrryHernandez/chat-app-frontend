@@ -12,7 +12,9 @@
 @import "./components/chat-card";
 @import "./components/input-text";
 @import "./components/message";
+@import "./components/search-card";
 
 //pages
 @import "./pages/login/login";
 @import "./pages/main/main";
+@import "./pages/main/components/search";

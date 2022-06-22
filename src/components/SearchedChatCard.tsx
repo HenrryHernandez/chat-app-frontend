@@ -42,12 +42,15 @@ export const SearchedChatCard = ({ chat }: Props) => {
   }, [chat._id, user]);
 
   return (
-    <div onClick={toggleOptions}>
-      {chat.name}
+    <div className="search-card" onClick={toggleOptions}>
+      <p>{chat.name}</p>
 
       {showOptions && (
         <div>
           <button
+            className={`btn btn-${
+              alreadyJoined ? "light" : "success"
+            } search-card__join-btn`}
             disabled={alreadyJoined}
             onClick={(e) => {
               joinChat(e);

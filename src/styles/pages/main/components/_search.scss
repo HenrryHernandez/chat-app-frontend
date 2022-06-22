@@ -1,0 +1,14 @@
+.search {
+  @include columnCenter;
+  margin-top: 2px;
+  padding: 10px;
+  background-color: rgb(224, 224, 224);
+
+  &__close-btn {
+    @include columnCenter;
+    margin-bottom: 4px;
+    height: 25px;
+    width: 25px;
+    font-size: 16px;
+  }
+}

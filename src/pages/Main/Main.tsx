@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, List, ListItem, Menu, MenuItem, styled } from "@mui/material";
-import { AccountCircle, Group, MoreVert, Send } from "@mui/icons-material";
+import {
+  AccountCircle,
+  Close,
+  Group,
+  MoreVert,
+  Send,
+} from "@mui/icons-material";
 
 import {
   ChatCard,
@@ -129,8 +135,13 @@ export const Main = () => {
           loading ? (
             <div>loading...</div>
           ) : (
-            <div>
-              <button onClick={toggleSearchBar}>X</button>
+            <div className="search">
+              <button
+                className="btn btn-danger search__close-btn"
+                onClick={toggleSearchBar}
+              >
+                <Close fontSize={"inherit"} />
+              </button>
               <InputText
                 setText={setSearchText}
                 text={searchText}

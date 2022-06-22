@@ -1,0 +1,22 @@
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.search-card {
+  @include columnCenter;
+  width: 100%;
+  margin-top: 10px;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: rgb(205, 205, 205);
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(180, 180, 180);
+  }
+
+  &__join-btn {
+    margin: 4px 0px;
+  }
+}
