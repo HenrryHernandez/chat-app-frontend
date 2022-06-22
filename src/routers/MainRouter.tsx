@@ -4,8 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PrivateRouter } from "./PrivateRouter";
 import { PublicRouter } from "./PublicRouter";
 import { AppStore } from "../models";
-import { Login } from "../pages/Login";
-import { Main } from "../pages/Main";
+import { Login, Main } from "../pages";
 
 export const MainRouter = () => {
   const { isAuthenticated } = useSelector((state: AppStore) => state.auth);

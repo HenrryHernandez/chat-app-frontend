@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { useInterceptors, useRequestAndLoad } from "../hooks";
-import { CustomResponse, LoginInformation } from "../models";
-import { loginAction, setUserAction } from "../redux/states";
-import { loginService, getUser } from "./../services";
+import { useInterceptors, useRequestAndLoad } from "../../hooks";
+import { CustomResponse, LoginInformation } from "../../models";
+import { loginAction, setUserAction } from "../../redux/states";
+import { loginService, getUser } from "../../services";
 
 export const Login = () => {
   const [username, setUsername] = useState("user_1");

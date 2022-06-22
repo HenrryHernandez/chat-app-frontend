@@ -3,10 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, List, ListItem, Menu, MenuItem, styled } from "@mui/material";
 import { AccountCircle, Group, MoreVert, Send } from "@mui/icons-material";
 
-import { ChatCard, InputText, Message, SearchedChatCard } from "../components";
-import { useChat } from "../hooks";
-import { AppStore } from "../models";
-import { logoutAction, removeUserAction } from "../redux/states";
+import {
+  ChatCard,
+  InputText,
+  Message,
+  SearchedChatCard,
+} from "../../components";
+import { useChat } from "../../hooks";
+import { AppStore } from "../../models";
+import { logoutAction, removeUserAction } from "../../redux/states";
 
 const StyledButton = styled(Button)({
   height: "100%",
